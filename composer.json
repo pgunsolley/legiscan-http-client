@@ -1,0 +1,25 @@
+{
+    "name": "pgunsolley/legiscan-http-client",
+    "description": "Legiscan API HTTP Client",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patrick Gunsolley",
+            "email": "patrick.gunsolley@outlook.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PGunsolley\\LegiscanHttpClient\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PGunsolley\\LegiscanHttpClient\\Test\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
