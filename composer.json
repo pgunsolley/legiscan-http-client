@@ -1,6 +1,6 @@
 {
     "name": "pgunsolley/legiscan-http-client",
-    "description": "Legiscan API HTTP Client",
+    "description": "LegiScan HTTP Client",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -12,14 +12,16 @@
     ],
     "autoload": {
         "psr-4": {
-            "PGunsolley\\LegiscanHttpClient\\": "src/"
+            "PGunsolley\\LegiScan\\Http\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PGunsolley\\LegiscanHttpClient\\Test\\": "tests/"
+            "PGunsolley\\LegiScan\\Http\\Test\\": "tests/"
         }
     },
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.0"
+    }
 }
