@@ -15,40 +15,29 @@ declare(strict_types=1);
 
 namespace PGunsolley\Legiscan\Http\Response;
 
-use IteratorAggregate;
-use Traversable;
 use Override;
 
-class SessionListResponse implements IteratorAggregate
+class SessionListResponse extends ResponseList
 {
-    /**
-     * @param array $data The session list data array
-     */
-    public function __construct(private array $data)
-    {
-    }
-
     #[Override]
-    public function getIterator(): Traversable
+    protected function createItem(array $item): object
     {
-        foreach ($this->data as $item) {
-            yield new SessionListResponseItem(
-                sessionId: $item['session_id'],
-                stateId: $item['state_id'],
-                stateAbbr: $item['state_abbr'],
-                yearStart: $item['year_start'],
-                yearEnd: $item['year_end'],
-                prefile: $item['prefile'],
-                sineDie: $item['sine_die'],
-                prior: $item['prior'],
-                special: $item['special'],
-                sessionTag: $item['session_tag'],
-                sessionTitle: $item['session_title'],
-                sessionName: $item['session_name'],
-                datasetHash: $item['dataset_hash'],
-                sessionHash: $item['session_hash'],
-                name: $item['name'],
-            );
-        }
+        return new SessionListResponseItem(
+            sessionId: $item['session_id'],
+            stateId: $item['state_id'],
+            stateAbbr: $item['state_abbr'],
+            yearStart: $item['year_start'],
+            yearEnd: $item['year_end'],
+            prefile: $item['prefile'],
+            sineDie: $item['sine_die'],
+            prior: $item['prior'],
+            special: $item['special'],
+            sessionTag: $item['session_tag'],
+            sessionTitle: $item['session_title'],
+            sessionName: $item['session_name'],
+            datasetHash: $item['dataset_hash'],
+            sessionHash: $item['session_hash'],
+            name: $item['name'],
+        );
     }
 }

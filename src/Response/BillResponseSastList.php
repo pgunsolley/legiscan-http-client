@@ -15,26 +15,18 @@ declare(strict_types=1);
 
 namespace PGunsolley\LegiScan\Http\Response;
 
-use IteratorAggregate;
-use Traversable;
 use Override;
 
-class BillResponseSastList implements IteratorAggregate
+class BillResponseSastList extends ResponseList
 {
-    public function __construct(private array $data)
-    {
-    }
-
     #[Override]
-    public function getIterator(): Traversable
+    protected function createItem(array $item): object
     {
-        foreach ($this->data as $item) {
-            yield new BillResponseSast(
-                typeId: $item['type_id'],
-                type: $item['type'],
-                sastBillNumber: $item['sast_bill_number'],
-                sastBillId: $item['sast_bill_id'],
-            );
-        }
+        return new BillResponseSast(
+            typeId: $item['type_id'],
+            type: $item['type'],
+            sastBillNumber: $item['sast_bill_number'],
+            sastBillId: $item['sast_bill_id'],
+        );
     }
 }

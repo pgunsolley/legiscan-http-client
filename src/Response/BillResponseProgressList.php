@@ -15,24 +15,16 @@ declare(strict_types=1);
 
 namespace PGunsolley\LegiScan\Http\Response;
 
-use IteratorAggregate;
-use Traversable;
 use Override;
 
-class BillResponseProgressList implements IteratorAggregate
+class BillResponseProgressList extends ResponseList
 {
-    public function __construct(private array $data)
-    {
-    }
-
     #[Override]
-    public function getIterator(): Traversable
+    protected function createItem(array $item): object
     {
-        foreach ($this->data as $item) {
-            yield new BillResponseProgress(
-                date: $item['date'],
-                event: $item['event'],
-            );
-        }
+        return new BillResponseProgress(
+            date: $item['date'],
+            event: $item['event'],
+        );
     }
 }

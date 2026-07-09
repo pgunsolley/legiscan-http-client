@@ -15,35 +15,24 @@ declare(strict_types=1);
 
 namespace PGunsolley\LegiScan\Http\Response;
 
-use IteratorAggregate;
-use Traversable;
 use Override;
 
-class MasterListResponse implements IteratorAggregate
+class MasterListResponse extends ResponseList
 {
-    /**
-     * @param array $data The master list data
-     */
-    public function __construct(private array $data)
-    {
-    }
-
     #[Override]
-    public function getIterator(): Traversable
+    protected function createItem(array $item): object
     {
-        foreach ($this->data as $item) {
-            yield new MasterListResponseItem(
-                billId: $item['bill_id'],
-                number: $item['number'],
-                changeHash: $item['changeHash'],
-                url: $item['url'],
-                statusDate: $item['status_date'],
-                status: $item['status'],
-                lastActionDate: $item['last_action_date'],
-                lastAction: $item['last_action'],
-                title: $item['title'],
-                description: $item['description'],
-            );
-        }
+        return new MasterListResponseItem(
+            billId: $item['bill_id'],
+            number: $item['number'],
+            changeHash: $item['changeHash'],
+            url: $item['url'],
+            statusDate: $item['status_date'],
+            status: $item['status'],
+            lastActionDate: $item['last_action_date'],
+            lastAction: $item['last_action'],
+            title: $item['title'],
+            description: $item['description'],
+        );
     }
 }

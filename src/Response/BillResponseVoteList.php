@@ -15,35 +15,27 @@ declare(strict_types=1);
 
 namespace PGunsolley\LegiScan\Http\Response;
 
-use IteratorAggregate;
-use Traversable;
 use Override;
 
-class BillResponseVoteList implements IteratorAggregate
+class BillResponseVoteList extends ResponseList
 {
-    public function __construct(private array $data)
-    {
-    }
-
     #[Override]
-    public function getIterator(): Traversable
+    protected function createItem(array $item): object
     {
-        foreach ($this->data as $item) {
-            yield new BillResponseVote(
-                rollCallId: $item['roll_call_id'],
-                date: $item['date'],
-                desc: $item['desc'],
-                yea: $item['yea'],
-                nay: $item['nay'],
-                nv: $item['nv'],
-                absent: $item['absent'],
-                total: $item['total'],
-                passed: $item['passed'],
-                chamber: $item['chamber'],
-                chamberId: $item['chamber_id'],
-                url: $item['url'],
-                stateLink: $item['state_link'],
-            );
-        }
+        return new BillResponseVote(
+            rollCallId: $item['roll_call_id'],
+            date: $item['date'],
+            desc: $item['desc'],
+            yea: $item['yea'],
+            nay: $item['nay'],
+            nv: $item['nv'],
+            absent: $item['absent'],
+            total: $item['total'],
+            passed: $item['passed'],
+            chamber: $item['chamber'],
+            chamberId: $item['chamber_id'],
+            url: $item['url'],
+            stateLink: $item['state_link'],
+        );
     }
 }

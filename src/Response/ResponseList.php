@@ -15,19 +15,23 @@ declare(strict_types=1);
 
 namespace PGunsolley\LegiScan\Http\Response;
 
+use IteratorAggregate;
+use Traversable;
 use Override;
 
-class BillResponseReferralList extends ResponseList
+abstract class ResponseList implements IteratorAggregate
 {
-    #[Override]
-    protected function createItem(array $item): object
+    public function __construct(protected array $data)
     {
-        return new BillResponseReferral(
-            date: $item['date'],
-            committeeId: $item['committee_id'],
-            chamber: $item['chamber'],
-            chamberId: $item['chamber_id'],
-            name: $item['name'],
-        );
     }
+
+    #[Override]
+    public function getIterator(): Traversable
+    {
+        foreach ($this->data as $item) {
+            yield $this->createItem($item);
+        }
+    }
+
+    abstract protected function createItem(array $item): object;
 }

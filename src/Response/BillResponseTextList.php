@@ -15,38 +15,30 @@ declare(strict_types=1);
 
 namespace PGunsolley\LegiScan\Http\Response;
 
-use IteratorAggregate;
-use Traversable;
 use Override;
 
-class BillResponseTextList implements IteratorAggregate
+class BillResponseTextList extends ResponseList
 {
-    public function __construct(private array $data)
-    {
-    }
-
     #[Override]
-    public function getIterator(): Traversable
+    protected function createItem(array $item): object
     {
-        foreach ($this->data as $item) {
-            yield new BillResponseText(
-                docId: $item['doc_id'],
-                date: $item['date'],
-                type: $item['type'],
-                typeId: $item['type_id'],
-                mime: $item['mime'],
-                mimeId: $item['mime_id'],
-                url: $item['url'],
-                stateLink: $item['state_link'],
-                textSize: $item['text_size'],
-                textHash: $item['text_hash'],
-                altBillText: $item['alt_bill_text'],
-                altMime: $item['alt_mime'],
-                altMimeId: $item['alt_mime_id'],
-                altStateLink: $item['alt_state_link'],
-                altTextSize: $item['alt_text_size'],
-                altTextHash: $item['alt_text_hash'],
-            );
-        }
+        return new BillResponseText(
+            docId: $item['doc_id'],
+            date: $item['date'],
+            type: $item['type'],
+            typeId: $item['type_id'],
+            mime: $item['mime'],
+            mimeId: $item['mime_id'],
+            url: $item['url'],
+            stateLink: $item['state_link'],
+            textSize: $item['text_size'],
+            textHash: $item['text_hash'],
+            altBillText: $item['alt_bill_text'],
+            altMime: $item['alt_mime'],
+            altMimeId: $item['alt_mime_id'],
+            altStateLink: $item['alt_state_link'],
+            altTextSize: $item['alt_text_size'],
+            altTextHash: $item['alt_text_hash'],
+        );
     }
 }

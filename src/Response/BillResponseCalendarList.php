@@ -15,29 +15,21 @@ declare(strict_types=1);
 
 namespace PGunsolley\LegiScan\Http\Response;
 
-use IteratorAggregate;
-use Traversable;
 use Override;
 
-class BillResponseCalendarList implements IteratorAggregate
+class BillResponseCalendarList extends ResponseList
 {
-    public function __construct(private array $data)
-    {
-    }
-
     #[Override]
-    public function getIterator(): Traversable
+    protected function createItem(array $item): object
     {
-        foreach ($this->data as $item) {
-            yield new BillResponseCalendar(
-                typeId: $item['type_id'],
-                eventHash: $item['event_hash'],
-                type: $item['type'],
-                date: $item['date'],
-                time: $item['time'],
-                location: $item['location'],
-                description: $item['description'],
-            );
-        }
+        return new BillResponseCalendar(
+            typeId: $item['type_id'],
+            eventHash: $item['event_hash'],
+            type: $item['type'],
+            date: $item['date'],
+            time: $item['time'],
+            location: $item['location'],
+            description: $item['description'],
+        );
     }
 }

@@ -15,41 +15,33 @@ declare(strict_types=1);
 
 namespace PGunsolley\LegiScan\Http\Response;
 
-use IteratorAggregate;
-use Traversable;
 use Override;
 
-class BillResponseAmendmentList implements IteratorAggregate
+class BillResponseAmendmentList extends ResponseList
 {
-    public function __construct(private array $data)
-    {
-    }
-
     #[Override]
-    public function getIterator(): Traversable
+    protected function createItem(array $item): object
     {
-        foreach ($this->data as $item) {
-            yield new BillResponseAmendment(
-                amendmentId: $item['amendment_id'],
-                adopted: $item['adopted'],
-                chamber: $item['chamber'],
-                chamberId: $item['chamber_id'],
-                date: $item['date'],
-                title: $item['title'],
-                description: $item['description'],
-                mime: $item['mime'],
-                mimeId: $item['mime_id'],
-                url: $item['url'],
-                stateLink: $item['state_link'],
-                amendmentSize: $item['amendment_size'],
-                amendmentHash: $item['amendment_hash'],
-                altAmendment: $item['alt_amendment'],
-                altMime: $item['alt_mime'],
-                altMimeId: $item['alt_mime_id'],
-                altStateLink: $item['alt_state_link'],
-                altAmendmentSize: $item['alt_amendment_size'],
-                altAmendmentHash: $item['alt_amendment_hash'],
-            );
-        }
+        return new BillResponseAmendment(
+            amendmentId: $item['amendment_id'],
+            adopted: $item['adopted'],
+            chamber: $item['chamber'],
+            chamberId: $item['chamber_id'],
+            date: $item['date'],
+            title: $item['title'],
+            description: $item['description'],
+            mime: $item['mime'],
+            mimeId: $item['mime_id'],
+            url: $item['url'],
+            stateLink: $item['state_link'],
+            amendmentSize: $item['amendment_size'],
+            amendmentHash: $item['amendment_hash'],
+            altAmendment: $item['alt_amendment'],
+            altMime: $item['alt_mime'],
+            altMimeId: $item['alt_mime_id'],
+            altStateLink: $item['alt_state_link'],
+            altAmendmentSize: $item['alt_amendment_size'],
+            altAmendmentHash: $item['alt_amendment_hash'],
+        );
     }
 }

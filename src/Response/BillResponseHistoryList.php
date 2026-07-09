@@ -15,27 +15,19 @@ declare(strict_types=1);
 
 namespace PGunsolley\LegiScan\Http\Response;
 
-use IteratorAggregate;
-use Traversable;
 use Override;
 
-class BillResponseHistoryList implements IteratorAggregate
+class BillResponseHistoryList extends ResponseList
 {
-    public function __construct(private array $data)
-    {
-    }
-
     #[Override]
-    public function getIterator(): Traversable
+    protected function createItem(array $item): object
     {
-        foreach ($this->data as $item) {
-            yield new BillResponseHistory(
-                date: $item['date'],
-                action: $item['action'],
-                chamber: $item['chamber'],
-                chamberId: $item['chamber_id'],
-                importance: $item['importance'],
-            );
-        }
+        return new BillResponseHistory(
+            date: $item['date'],
+            action: $item['action'],
+            chamber: $item['chamber'],
+            chamberId: $item['chamber_id'],
+            importance: $item['importance'],
+        );
     }
 }
