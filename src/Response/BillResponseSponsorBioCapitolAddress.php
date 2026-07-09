@@ -13,15 +13,16 @@
 
 declare(strict_types=1);
 
-namespace PGunsolley\LegiScan\Http\Dto;
+namespace PGunsolley\LegiScan\Http\Response;
 
-class BillSastDto
+class BillResponseSponsorBioCapitolAddress
 {
     public function __construct(
-        public readonly int $typeId,
-        public readonly string $type,
-        public readonly string $sastBillNumber,
-        public readonly int $sastBillId,
+        public readonly string $address1,
+        public readonly string $address2,
+        public readonly string $city,
+        public readonly string $state,
+        public readonly string $zip,
     ) {
     }
 }

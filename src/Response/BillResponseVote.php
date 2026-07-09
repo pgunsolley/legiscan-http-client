@@ -13,13 +13,24 @@
 
 declare(strict_types=1);
 
-namespace PGunsolley\LegiScan\Http\Dto;
+namespace PGunsolley\LegiScan\Http\Response;
 
-class BillProgressDto
+class BillResponseVote
 {
     public function __construct(
+        public readonly int $rollCallId,
         public readonly string $date,
-        public readonly int $event,
+        public readonly string $desc,
+        public readonly int $yea,
+        public readonly int $nay,
+        public readonly int $nv,
+        public readonly int $absent,
+        public readonly int $total,
+        public readonly int $passed,
+        public readonly string $chamber,
+        public readonly int $chamberId,
+        public readonly string $url,
+        public readonly string $stateLink,
     ) {
     }
 }

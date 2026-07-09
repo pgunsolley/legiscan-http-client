@@ -13,13 +13,14 @@
 
 declare(strict_types=1);
 
-namespace PGunsolley\LegiScan\Http\Dto;
+namespace PGunsolley\Legiscan\Http\Response;
 
-class BillSessionDto
+class SessionListRecord
 {
     public function __construct(
         public readonly int $sessionId,
         public readonly int $stateId,
+        public readonly string $stateAbbr,
         public readonly int $yearStart,
         public readonly int $yearEnd,
         public readonly int $prefile,
@@ -29,6 +30,9 @@ class BillSessionDto
         public readonly string $sessionTag,
         public readonly string $sessionTitle,
         public readonly string $sessionName,
+        public readonly string $datasetHash,
+        public readonly string $sessionhash,
+        public readonly string $name,
     ) {
     }
 }

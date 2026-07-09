@@ -13,16 +13,9 @@
 
 declare(strict_types=1);
 
-namespace PGunsolley\LegiScan\Http\Dto;
+namespace PGunsolley\LegiScan\Http\Response\Collection;
 
-class BillSponsorBioCapitolAddressDto
+class SessionListResponseCollection
 {
-    public function __construct(
-        public readonly string $address1,
-        public readonly string $address2,
-        public readonly string $city,
-        public readonly string $state,
-        public readonly string $zip,
-    ) {
-    }
+
 }

@@ -13,27 +13,29 @@
 
 declare(strict_types=1);
 
-namespace PGunsolley\LegiScan\Http\Dto;
+namespace PGunsolley\LegiScan\Http\Response;
 
-class BillTextDto
+class BillResponseSupplement
 {
     public function __construct(
-        public readonly int $docId,
+        public readonly int $supplementId,
         public readonly string $date,
         public readonly string $type,
         public readonly int $typeId,
+        public readonly string $title,
+        public readonly string $description,
         public readonly string $mime,
         public readonly int $mimeId,
         public readonly string $url,
         public readonly string $stateLink,
-        public readonly int $textSize,
-        public readonly string $textHash,
-        public readonly int $altBillText,
+        public readonly int $supplementSize,
+        public readonly string $supplementHash,
+        public readonly int $altSupplement,
         public readonly string $altMime,
         public readonly int $altMimeId,
         public readonly string $altStateLink,
-        public readonly int $altTextSize,
-        public readonly string $altTextHash,
+        public readonly int $altSupplementSize,
+        public readonly string $altSupplementHash,
     ) {
     }
 }

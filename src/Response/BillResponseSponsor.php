@@ -13,9 +13,9 @@
 
 declare(strict_types=1);
 
-namespace PGunsolley\LegiScan\Http\Dto;
+namespace PGunsolley\LegiScan\Http\Response;
 
-class BillSponsorDto
+class BillResponseSponsor
 {
     public function __construct(
         public readonly int $peopleId,
@@ -43,7 +43,7 @@ class BillSponsorDto
         public readonly int $committeeSponsor,
         public readonly int $committeeId,
         public readonly int $stateFederal,
-        public readonly BillSponsorBioDto $bio,
+        public readonly BillResponseSponsorBio $bio,
     ) {
     }
 }

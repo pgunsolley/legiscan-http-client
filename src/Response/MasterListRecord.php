@@ -13,9 +13,9 @@
 
 declare(strict_types=1);
 
-namespace PGunsolley\LegiScan\Http\Dto;
+namespace PGunsolley\LegiScan\Http\Response;
 
-class MasterListItemDto
+class MasterListRecord
 {
     public function __construct(
         public readonly int $billId,

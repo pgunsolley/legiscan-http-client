@@ -13,13 +13,19 @@
 
 declare(strict_types=1);
 
-namespace PGunsolley\LegiScan\Http\Dto;
+namespace PGunsolley\LegiScan\Http\Response;
 
-class BillSponsorBioLinksDto
+class BillResponseSponsorBioLink
 {
     public function __construct(
-        public readonly BillSponsorBioLinkDto $official,
-        public readonly BillSponsorBioLinkDto $personal,
+        public readonly string $bluesky,
+        public readonly string $facebook,
+        public readonly string $instagram,
+        public readonly string $linkedin,
+        public readonly string $tiktok,
+        public readonly string $twitter,
+        public readonly string $website,
+        public readonly string $youtube,
     ) {
     }
 }

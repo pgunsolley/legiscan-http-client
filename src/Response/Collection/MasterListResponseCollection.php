@@ -13,16 +13,9 @@
 
 declare(strict_types=1);
 
-namespace PGunsolley\LegiScan\Http\Dto;
+namespace PGunsolley\LegiScan\Http\Response\Collection;
 
-class BillHistoryDto
+class MasterListResponseCollection
 {
-    public function __construct(
-        public readonly string $date,
-        public readonly string $action,
-        public readonly string $chamber,
-        public readonly int $chamberId,
-        public readonly int $importance,
-    ) {
-    }
+
 }

@@ -13,9 +13,9 @@
 
 declare(strict_types=1);
 
-namespace PGunsolley\LegiScan\Http\Dto;
+namespace PGunsolley\LegiScan\Http\Response;
 
-class BillSponsorBioSocialDto
+class BillResponseSponsorBioSocial
 {
     public function __construct(
         public readonly string $capitolPhone,

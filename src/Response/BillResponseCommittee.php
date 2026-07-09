@@ -13,13 +13,15 @@
 
 declare(strict_types=1);
 
-namespace PGunsolley\LegiScan\Http\Dto;
+namespace PGunsolley\LegiScan\Http\Response;
 
-class BillSubjectDto
+class BillResponseCommittee
 {
     public function __construct(
-        public readonly int $subjectId,
-        public readonly string $subjectName,
+        public readonly int $committeeId,
+        public readonly string $chamber,
+        public readonly int $chamberId,
+        public readonly string $name,
     ) {
     }
 }
