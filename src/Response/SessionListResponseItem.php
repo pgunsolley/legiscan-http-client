@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace PGunsolley\Legiscan\Http\Response;
 
-class SessionListRecord
+class SessionListResponseItem
 {
     public function __construct(
         public readonly int $sessionId,
@@ -31,7 +31,7 @@ class SessionListRecord
         public readonly string $sessionTitle,
         public readonly string $sessionName,
         public readonly string $datasetHash,
-        public readonly string $sessionhash,
+        public readonly string $sessionHash,
         public readonly string $name,
     ) {
     }
