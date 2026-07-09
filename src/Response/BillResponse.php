@@ -45,12 +45,12 @@ class BillResponse
         public readonly BillResponseHistoryList $history,
         public readonly BillResponseSponsorList $sponsors,
         public readonly BillResponseSastList $sasts,
-        public readonly iterable $subjects,
-        public readonly iterable $texts,
-        public readonly iterable $votes,
-        public readonly iterable $amendments,
-        public readonly iterable $supplements,
-        public readonly iterable $calendar,
+        public readonly BillResponseSubjectList $subjects,
+        public readonly BillResponseTextList $texts,
+        public readonly BillResponseVoteList $votes,
+        public readonly BillResponseAmendmentList $amendments,
+        public readonly BillResponseSupplementList $supplements,
+        public readonly BillResponseCalendarList $calendar,
     ) {
     }
 }
