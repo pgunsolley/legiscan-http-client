@@ -16,8 +16,8 @@ declare(strict_types=1);
 namespace PGunsolley\Legiscan\Http;
 
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Psr7\Response;
-use PGunsolley\Legiscan\Http\Dto\SessionListRecordDto;
+use PGunsolley\LegiScan\Http\Exception\InvalidResponseStatusException;
+use PGunsolley\Legiscan\Http\Response\SessionListResponse;
 
 /**
  * Client
@@ -38,32 +38,57 @@ class Client
      * instance will be used. In most cases, the default is sufficient.
      * 
      * @param string                        $key    Legiscan API auth key
-     * @param \GuzzleHttp\Client|array|null $guzzle Guzzle HTTP client or configuration
+     * @param \GuzzleHttp\Client|array $guzzle Guzzle HTTP client or configuration
      */
-    public function __construct(private string $key, GuzzleClient|array|null $guzzle = null)
+    public function __construct(private string $key, GuzzleClient|array $guzzle = [])
     {
-        $this->client = $guzzle instanceof GuzzleClient ? $guzzle : new GuzzleClient($guzzle ?? [
-            'base_uri' => 'https://api.legiscan.com',
-        ]);
+        $this->client = $guzzle instanceof GuzzleClient ? $guzzle : new GuzzleClient($guzzle);
     }
 
     /**
-     * 
+     * @param array $query An array of query params for the request
+     * @return array
      */
-    private function handleGetRequest(): Response
+    public function handleRequest(array $query): array
     {
+        $res = $this
+            ->client
+            ->get(
+                uri: 'https://api.legiscan.com',
+                options: [
+                    'headers' => [
+                        'Accept' => 'application/json',
+                    ],
+                    'query' => ['key' => $this->key] + $query,
+                ],
+            );
 
+        $statusCode = $res->getStatusCode();
+        if ($statusCode !== 200) {
+            throw new InvalidResponseStatusException("Status code is $statusCode");
+        }
+
+        return json_decode($res->getBody()->getContents(), true);
     }
 
     /**
      * GET a session list response
      * 
      * @param string $state The target US state abbreviation
-     * @return \PGunsolley\LegiScan\Http\Dto\SessionListRecordDto
+     * @return \PGunsolley\LegiScan\Http\Response\SessionListResponse
      */
-    public function getSessionList(string $state): SessionListRecordDto
+    public function getSessionList(string $state): SessionListResponse
     {
+        $data = $this->handleRequest([
+            'op' => 'getSessionList',
+            'state' => $state,
+        ]);
 
+        if (!ResponseDataValidation::isValidSessionListData($data)) {
+            // TODO: Create custom exception that accepts the response data array
+        }
+
+        return ResponseFactory::createSessionListResponse($data);
     }
 
     /**
@@ -74,7 +99,16 @@ class Client
      */
     public function getMasterList(int $id)
     {
+        $data = $this->handleRequest([
+            'op' => 'getMasterList',
+            'id' => $id,
+        ]);
 
+        if (!ResponseDataValidation::isValidMasterListData($data)) {
+            // TODO: Throw?
+        }
+
+        return ResponseFactory::createMasterListResponse($data);
     }
 
     /**
@@ -85,7 +119,12 @@ class Client
      */
     public function getBill(int $id)
     {
+        $data = $this->handleRequest([
+            'op' => 'getBill',
+            'id' => $id,
+        ]);
 
+        
     }
 
     /**
