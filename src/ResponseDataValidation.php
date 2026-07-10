@@ -620,4 +620,146 @@ class ResponseDataValidation
 
         return true;
     }
+
+    /**
+     * Validates the structure and values of the 'getBillText' response data.
+     * 
+     * @param array $data
+     * @return bool
+     */
+    public static function isValidBillTextData(array $data): bool
+    {
+        if (!array_key_exists('text', $data)) {
+            return false;
+        }
+
+        $text = $data['text'];
+
+        if (!self::areValidIntKeys([
+            'doc_id',
+            'bill_id',
+            'type_id',
+            'mime_id',
+            'text_size',
+            'alt_bill_text',
+            'alt_mime_id',
+            'alt_text_size',
+        ], $text)) {
+            return false;
+        }
+
+        if (!self::areValidStrKeys([
+            'date',
+            'type',
+            'mime',
+            'url',
+            'state_link',
+            'text_hash',
+            'doc',
+            'alt_mime',
+            'alt_state_link',
+            'alt_text_hash',
+        ], $text)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validates the structure and values of the 'getAmendment' response data.
+     * 
+     * @param array $data
+     * @return bool
+     */
+    public static function isValidAmendmentData(array $data): bool
+    {
+        if (!array_key_exists('amendment', $data)) {
+            return false;
+        }
+
+        $amendment = $data['amendment'];
+
+        if (!self::areValidIntKeys([
+            'amendment_id',
+            'bill_id',
+            'adopted',
+            'chamber_id',
+            'mime_id',
+            'amendment_size',
+            'alt_amendment',
+            'alt_mime_id',
+            'alt_amendment_size',
+        ], $amendment)) {
+            return false;
+        }
+
+        if (!self::areValidStrKeys([
+            'chamber',
+            'date',
+            'title',
+            'description',
+            'mime',
+            'url',
+            'state_link',
+            'amendment_hash',
+            'doc',
+            'alt_mime',
+            'alt_state_link',
+            'alt_amendment_hash',
+            'alt_doc',
+        ], $amendment)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validates the structure and values of the 'getSupplement' response data.
+     * 
+     * @param array $data
+     * @return bool
+     */
+    public static function isValidSupplementData(array $data): bool
+    {
+        if (!array_key_exists('supplement', $data)) {
+            return false;
+        }
+
+        $supplement = $data['supplement'];
+
+        if (!self::areValidIntKeys([
+            'supplement_id',
+            'bill_id',
+            'type_id',
+            'mime_id',
+            'supplement_size',
+            'alt_supplement',
+            'alt_mime_id',
+            'alt_supplement_size',
+        ], $supplement)) {
+            return false;
+        }
+
+        if (!self::areValidStrKeys([
+            'date',
+            'type',
+            'title',
+            'description',
+            'mime',
+            'url',
+            'state_link',
+            'supplement_hash',
+            'doc',
+            'alt_mime',
+            'alt_state_link',
+            'alt_supplement_hash',
+            'alt_doc',
+        ], $supplement)) {
+            return false;
+        }
+
+        return true;
+    }
 }
