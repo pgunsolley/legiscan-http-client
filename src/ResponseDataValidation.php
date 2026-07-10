@@ -762,4 +762,234 @@ class ResponseDataValidation
 
         return true;
     }
+
+    /**
+     * Validates the structure and values of the 'person' response data.
+     * 
+     * @param array $data
+     * @return bool
+     */
+    public static function isValidPersonData(array $data): bool
+    {
+        if (!array_key_exists('person', $data)) {
+            return false;
+        }
+
+        $person = $data['person'];
+
+        if (!self::areValidIntKeys([
+            'people_id',
+            'state_id',
+            'role_id',
+            'ftm_eid',
+            'votesmart_id',
+            'knowwho_pid',
+            'committee_sponsor',
+            'committee_id',
+            'state_federal',
+        ], $person)) {
+            return false;
+        }
+
+        if (!self::areValidStrKeys([
+            'person_hash',
+            'party_id',
+            'party',
+            'role',
+            'name',
+            'first_name',
+            'middle_name',
+            'last_name',
+            'suffix',
+            'nickname',
+            'district',
+            'opensecrets_id',
+            'ballotpedia',
+            'bioguide_id',
+        ], $person)) {
+            return false;
+        }
+
+        if (!array_key_exists('bio', $person)) {
+            return false;
+        }
+
+        $bio = $person['bio'];
+
+        if (!array_key_exists('social', $bio)) {
+            return false;
+        }
+
+        $social = $bio['social'];
+
+        if (!self::areValidStrKeys([
+            'capitol_phone',
+            'district_phone',
+            'email',
+            'webmail',
+            'biography',
+            'image',
+            'ballotpedia',
+            'votesmart',
+        ], $social)) {
+            return false;
+        }
+
+        if (!array_key_exists('capitol_address', $bio)) {
+            return false;
+        }
+
+        $capitolAddress = $bio['capitol_address'];
+
+        if (!self::areValidStrKeys([
+            'address1',
+            'address2',
+            'city',
+            'state',
+            'zip',
+        ], $capitolAddress)) {
+            return false;
+        }
+
+        if (!array_key_exists('links', $bio)) {
+            return false;
+        }
+
+        $links = $bio['links'];
+
+        foreach (['official', 'personal'] as $linkTypeKey) {
+            if (!self::areValidStrKeys([
+                'bluesky',
+                'facebook',
+                'instagram',
+                'linkedin',
+                'tiktok',
+                'twitter',
+                'website',
+                'youtube',
+            ], $links[$linkTypeKey])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Validates the structure and values of the 'sessionPeople' response data.
+     * 
+     * @param array $data
+     * @return bool
+     */
+    public static function isValidSessionPeopleData(array $data): bool
+    {
+        if (!array_key_exists('sessionpeople', $data)) {
+            return false;
+        }
+
+        if (!array_key_exists('people', $data['sessionpeople'])) {
+            return false;
+        }
+
+        $people = $data['sessionpeople']['people'];
+
+        foreach ($people as $person) {
+            if (!self::areValidIntKeys([
+                'people_id',
+                'state_id',
+                'role_id',
+                'ftm_eid',
+                'votesmart_id',
+                'knowwho_pid',
+                'committee_sponsor',
+                'committee_id',
+                'state_federal',
+            ], $person)) {
+                return false;
+            }
+
+            if (!self::areValidStrKeys([
+                'person_hash',
+                'party_id',
+                'party',
+                'role',
+                'name',
+                'first_name',
+                'middle_name',
+                'last_name',
+                'suffix',
+                'nickname',
+                'district',
+                'opensecrets_id',
+                'ballotpedia',
+                'bioguide_id',
+            ], $person)) {
+                return false;
+            }
+
+            if (!array_key_exists('bio', $person)) {
+                return false;
+            }
+
+            $bio = $person['bio'];
+
+            if (!array_key_exists('social', $bio)) {
+                return false;
+            }
+
+            $social = $bio['social'];
+
+            if (!self::areValidStrKeys([
+                'capitol_phone',
+                'district_phone',
+                'email',
+                'webmail',
+                'biography',
+                'image',
+                'ballotpedia',
+                'votesmart',
+            ], $social)) {
+                return false;
+            }
+
+            if (!array_key_exists('capitol_address', $bio)) {
+                return false;
+            }
+
+            $capitolAddress = $bio['capitol_address'];
+
+            if (!self::areValidStrKeys([
+                'address1',
+                'address2',
+                'city',
+                'state',
+                'zip',
+            ], $capitolAddress)) {
+                return false;
+            }
+
+            if (!array_key_exists('links', $bio)) {
+                return false;
+            }
+
+            $links = $bio['links'];
+
+            foreach (['official', 'personal'] as $linkTypeKey) {
+                if (!self::areValidStrKeys([
+                    'bluesky',
+                    'facebook',
+                    'instagram',
+                    'linkedin',
+                    'tiktok',
+                    'twitter',
+                    'website',
+                    'youtube',
+                ], $links[$linkTypeKey])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }
