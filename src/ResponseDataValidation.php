@@ -92,8 +92,10 @@ class ResponseDataValidation
             return false;
         }
 
-        foreach ($data['sessions'] as $session) {
-            foreach ([
+        $sessions = $data['sessions'];
+
+        foreach ($sessions as $session) {
+            if (!self::areValidIntKeys([
                 'session_id',
                 'state_id',
                 'year_start',
@@ -102,13 +104,11 @@ class ResponseDataValidation
                 'sine_die',
                 'prior',
                 'special',
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $session)) {
-                    return false;
-                }
+            ], $session)) {
+                return false;
             }
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'state_abbr',
                 'session_tag',
                 'session_title',
@@ -116,10 +116,8 @@ class ResponseDataValidation
                 'dataset_hash',
                 'session_hash',
                 'name',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $session)) {
-                    return false;
-                }
+            ], $session)) {
+                return false;
             }
         }
 
@@ -137,22 +135,22 @@ class ResponseDataValidation
         if (!array_key_exists('masterlist', $data)) {
             return false;
         }
+
+        $masterlist = $data['masterlist'];
         
-        foreach ($data['masterlist'] as $key => $master) {
+        foreach ($masterlist as $key => $master) {
             if (!is_numeric($key)) {
                 continue;
             }
 
-            foreach ([
+            if (!self::areValidIntKeys([
                 'bill_id',
                 'status',
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $master)) {
-                    return false;
-                }
+            ], $master)) {
+                return false;
             }
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'number',
                 'change_hash',
                 'url',
@@ -161,11 +159,9 @@ class ResponseDataValidation
                 'last_action',
                 'title',
                 'description',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $master)) {
-                        return false;
-                    }
-                }
+            ], $master)) {
+                return false;
+            }
         }
 
         return true;
@@ -185,7 +181,7 @@ class ResponseDataValidation
 
         $bill = $data['bill'];
 
-        foreach ([
+        if (!self::areValidIntKeys([
             'bill_id',
             'session_id',
             'completed',
@@ -194,13 +190,11 @@ class ResponseDataValidation
             'body_id',
             'current_body_id',
             'pending_committee_id',
-        ] as $intKey) {
-            if (!self::isValidIntKey($intKey, $bill)) {
-                return false;
-            }
+        ], $bill)) {
+            return false;
         }
 
-        foreach ([
+        if (!self::areValidStrKeys([
             'change_hash',
             'url',
             'state_link',
@@ -213,10 +207,8 @@ class ResponseDataValidation
             'current_body',
             'title',
             'description',
-        ] as $strKey) {
-            if (!self::isValidStrKey($strKey, $bill)) {
-                return false;
-            }
+        ], $bill)) {
+            return false;
         }
 
         if (!array_key_exists('session', $bill)) {
@@ -225,7 +217,7 @@ class ResponseDataValidation
 
         $session = $bill['session'];
 
-        foreach ([
+        if (!self::areValidIntKeys([
             'session_id',
             'state_id',
             'year_start',
@@ -234,20 +226,16 @@ class ResponseDataValidation
             'sine_die',
             'prior',
             'special'
-        ] as $intKey) {
-            if (!self::isValidIntKey($intKey, $session)) {
-                return false;
-            }
+        ], $session)) {
+            return false;
         }
 
-        foreach ([
+        if (!self::areValidStrKeys([
             'session_tag',
             'session_title',
             'session_name',
-        ] as $strKey) {
-            if (!self::isValidStrKey($strKey, $session)) {
-                return false;
-            }
+        ], $session)) {
+            return false;
         }
 
         if (!array_key_exists('progress', $bill)) {
@@ -257,20 +245,12 @@ class ResponseDataValidation
         $progresses = $bill['progress'];
 
         foreach ($progresses as $progress) {
-            foreach ([
-                'event',
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $progress)) {
-                    return false;
-                }
+            if (!self::isValidIntKey('event', $progress)) {
+                return false;
             }
 
-            foreach ([
-                'date',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $progress)) {
-                    return false;
-                }
+            if (!self::isValidStrKey('date', $progress)) {
+                return false;
             }
         }
 
@@ -280,22 +260,18 @@ class ResponseDataValidation
 
         $committee = $bill['committee'];
 
-        foreach ([
+        if (!self::areValidIntKeys([
             'committee_id',
             'chamber_id',
-        ] as $intKey) {
-            if (!self::isValidIntKey($intKey, $committee)) {
-                return false;
-            }
+        ], $committee)) {
+            return false;
         }
 
-        foreach ([
+        if (!self::areValidStrKeys([
             'chamber',
             'name',
-        ] as $strKey) {
-            if (!self::isValidStrKey($strKey, $committee)) {
-                return false;
-            }
+        ], $committee)) {
+            return false;
         }
 
         if (!array_key_exists('referrals', $bill)) {
@@ -305,23 +281,19 @@ class ResponseDataValidation
         $referrals = $bill['referrals'];
 
         foreach ($referrals as $referral) {
-            foreach ([
+            if (!self::areValidIntKeys([
                 'committee_id',
                 'chamber_id',
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $referral)) {
-                    return false;
-                }
+            ], $referral)) {
+                return false;
             }
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'date',
                 'chamber',
                 'name',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $referral)) {
-                    return false;
-                }
+            ], $referral)) {
+                return false;
             }
         }
 
@@ -332,23 +304,19 @@ class ResponseDataValidation
         $histories = $bill['history'];
 
         foreach ($histories as $history) {
-            foreach ([
+            if (!self::areValidIntKeys([
                 'chamber_id',
                 'importance',
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $history)) {
-                    return false;
-                }
+            ], $history)) {
+                return false;
             }
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'date',
                 'action',
                 'chamber',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $history)) {
-                    return false;
-                }
+            ], $history)) {
+                return false;
             }
         }
 
@@ -359,7 +327,7 @@ class ResponseDataValidation
         $sponsors = $bill['sponsors'];
 
         foreach ($sponsors as $sponsor) {
-            foreach ([
+            if (!self::areValidIntKeys([
                 'people_id',
                 'state_id',
                 'role_id',
@@ -371,13 +339,11 @@ class ResponseDataValidation
                 'committee_sponsor',
                 'committee_id',
                 'state_federal',
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $sponsor)) {
-                    return false;
-                }
+            ], $sponsor)) {
+                return false;
             }
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'person_hash',
                 'party_id',
                 'party',
@@ -392,10 +358,8 @@ class ResponseDataValidation
                 'opensecrets_id',
                 'ballotpedia',
                 'bioguide_id',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $sponsor)) {
-                    return false;
-                }
+            ], $sponsor)) {
+                return false;
             }
 
             if (!array_key_exists('bio', $sponsor)) {
@@ -410,7 +374,7 @@ class ResponseDataValidation
 
             $social = $bio['social'];
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'capitol_phone',
                 'district_phone',
                 'email',
@@ -419,10 +383,8 @@ class ResponseDataValidation
                 'image',
                 'ballotpedia',
                 'votesmart',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $social)) {
-                    return false;
-                }
+            ], $social)) {
+                return false;
             }
 
             if (!array_key_exists('capitol_address', $bio)) {
@@ -431,16 +393,14 @@ class ResponseDataValidation
 
             $capitolAddress = $bio['capitol_address'];
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'address1',
                 'address2',
                 'city',
                 'state',
                 'zip',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $capitolAddress)) {
-                    return false;
-                }
+            ], $capitolAddress)) {
+                return false;
             }
 
             if (!array_key_exists('links', $bio)) {
@@ -450,7 +410,7 @@ class ResponseDataValidation
             $links = $bio['links'];
 
             foreach (['official', 'personal'] as $linkTypeKey) {
-                foreach ([
+                if (!self::areValidStrKeys([
                     'bluesky',
                     'facebook',
                     'instagram',
@@ -459,10 +419,8 @@ class ResponseDataValidation
                     'twitter',
                     'website',
                     'youtube',
-                ] as $strKey) {
-                    if (!self::isValidStrKey($strKey, $links[$linkTypeKey])) {
-                        return false;
-                    }
+                ], $links[$linkTypeKey])) {
+                    return false;
                 }
             }
         }
@@ -474,22 +432,18 @@ class ResponseDataValidation
         $sasts = $bill['sasts'];
 
         foreach ($sasts as $sast) {
-            foreach ([
+            if (!self::areValidIntKeys([
                 'type_id',
                 'sast_bill_id',
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $sast)) {
-                    return false;
-                }
+            ], $sast)) {
+                return false;
             }
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'type',
                 'sast_bill_number',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $sast)) {
-                    return false;
-                }
+            ], $sast)) {
+                return false;
             }
         }
 
@@ -512,7 +466,7 @@ class ResponseDataValidation
         $texts = $bill['texts'];
 
         foreach ($texts as $text) {
-            foreach ([
+            if (!self::areValidIntKeys([
                 'doc_id',
                 'type_id',
                 'mime_id',
@@ -520,13 +474,11 @@ class ResponseDataValidation
                 'alt_bill_text',
                 'alt_mime_id',
                 'alt_text_size',
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $text)) {
-                    return false;
-                }
+            ], $text)) {
+                return false;
             }
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'date',
                 'type',
                 'mime',
@@ -536,10 +488,8 @@ class ResponseDataValidation
                 'alt_mime',
                 'alt_state_link',
                 'alt_text_hash',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $text)) {
-                    return false;
-                }
+            ], $text)) {
+                return false;
             }
         }
 
@@ -550,7 +500,7 @@ class ResponseDataValidation
         $votes = $bill['votes'];
 
         foreach ($votes as $vote) {
-            foreach ([
+            if (!self::areValidIntKeys([
                 'roll_call_id',
                 'yea',
                 'nay',
@@ -559,23 +509,17 @@ class ResponseDataValidation
                 'total',
                 'passed',
                 'chamber_id',
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $vote)) {
-                    return false;
-                }
+            ], $vote)) {
+                return false;
             }
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'date',
                 'desc',
                 'chamber',
                 'url',
                 'state_link',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $vote)) {
-                    return false;
-                }
-            }
+            ], $vote));
         }
 
         if (!array_key_exists('amendments', $bill)) {
@@ -585,7 +529,7 @@ class ResponseDataValidation
         $amendments = $bill['amendments'];
 
         foreach ($amendments as $amendment) {
-            foreach ([
+            if (!self::areValidIntKeys([
                 'amendment_id',
                 'adopted',
                 'chamber_id',
@@ -593,14 +537,12 @@ class ResponseDataValidation
                 'amendment_size',
                 'alt_amendment',
                 'alt_mime_id',
-                'alt_amendment_size'
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $amendment)) {
-                    return false;
-                }
+                'alt_amendment_size',
+            ], $amendment)) {
+                return false;
             }
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'chamber',
                 'date',
                 'title',
@@ -612,10 +554,8 @@ class ResponseDataValidation
                 'alt_mime',
                 'alt_state_link',
                 'alt_amendment_hash',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $amendment)) {
-                    return false;
-                }
+            ], $amendment)) {
+                return false;
             }
         }
 
@@ -626,7 +566,7 @@ class ResponseDataValidation
         $supplements = $bill['supplements'];
 
         foreach ($supplements as $supplement) {
-            foreach ([
+            if (!self::areValidIntKeys([
                 'supplement_id',
                 'type_id',
                 'mime_id',
@@ -634,13 +574,11 @@ class ResponseDataValidation
                 'alt_supplement',
                 'alt_mime_id',
                 'alt_supplement_size',
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $supplement)) {
-                    return false;
-                }
+            ], $supplement)) {
+                return false;
             }
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'date',
                 'type',
                 'title',
@@ -652,10 +590,8 @@ class ResponseDataValidation
                 'alt_mime',
                 'alt_state_link',
                 'alt_supplement_hash',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $supplement)) {
-                    return false;
-                }
+            ], $supplement)) {
+                return false;
             }
         }
 
@@ -666,25 +602,19 @@ class ResponseDataValidation
         $calendar = $bill['calendar'];
 
         foreach ($calendar as $calendarEvent) {
-            foreach ([
-                'type_id',
-            ] as $intKey) {
-                if (!self::isValidIntKey($intKey, $calendarEvent)) {
-                    return false;
-                }
+            if (!self::isValidIntKey('type_id', $calendarEvent)) {
+                return false;
             }
 
-            foreach ([
+            if (!self::areValidStrKeys([
                 'event_hash',
                 'type',
                 'date',
                 'time',
                 'location',
                 'description',
-            ] as $strKey) {
-                if (!self::isValidStrKey($strKey, $calendarEvent)) {
-                    return false;
-                }
+            ], $calendarEvent)) {
+                return false;
             }
         }
 
